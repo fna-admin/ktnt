@@ -3,39 +3,39 @@ name: Build and Deploy to Kashmir Tours n Travels S3 Bucket
 on:
   push:
     branches:
-      - main  # Trigger on push to the main branch
+      - main # Trigger on push to the main branch
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the repository
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    # Set up Node.js environment
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
+      # Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
 
-    # Install dependencies
-    - name: Install Dependencies
-      run: npm install
+      # Install dependencies
+      - name: Install Dependencies
+        run: npm install
 
-    # Build the project using Parcel
-    - name: Build Project
-      run: npm run build
+      # Build the project using Parcel
+      - name: Build Project
+        run: npm run build
 
-    # Upload build artifacts to the new S3 bucket
-    - name: Deploy to New S3 Bucket
-      uses: jakejarvis/s3-sync-action@v0.5.1
-      with:
-        args: --acl public-read --delete
-      env:
-        AWS_S3_BUCKET: ${{ secrets.AWS_NEW_S3_BUCKET }}   #  S3 bucket name (store in Secrets)
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_NEW_ACCESS_KEY_ID }} #  AWS Access Key (store in Secrets)
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_NEW_SECRET_ACCESS_KEY }} #  AWS Secret Key (store in Secrets)
-        AWS_REGION: 'us-east-1'  # e.g., us-east-1
-        SOURCE_DIR: 'dist'         # Directory containing Parcel's build output
+      # Upload build artifacts to the new S3 bucket
+      - name: Deploy to New S3 Bucket
+        uses: jakejarvis/s3-sync-action@v0.5.1
+        with:
+          args: --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_NEW_S3_BUCKET }} #  S3 bucket name (store in Secrets)
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_NEW_ACCESS_KEY_ID }} #  AWS Access Key (store in Secrets)
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_NEW_SECRET_ACCESS_KEY }} #  AWS Secret Key (store in Secrets)
+          AWS_REGION: "us-east-1" # e.g., us-east-1
+          SOURCE_DIR: "dist" # Directory containing Parcel's build output
