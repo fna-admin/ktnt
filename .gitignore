@@ -1,0 +1,37 @@
+# AWS Credentials
+~/.aws/credentials
+
+# Environment Files
+.env
+.env.local
+.env.production
+.env.development
+
+# Build and Output Directories
+dist/
+build/
+
+# Node Modules
+node_modules/
+
+# Parcel Cache
+.parcel-cache/
+
+# Logs
+npm-debug.log
+yarn-error.log
+*.log
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# IDE or Editor Files
+.vscode/
+.idea/
+*.iml
+
+# Temporary Files
+*.tmp
+*.bak
+*.swp
